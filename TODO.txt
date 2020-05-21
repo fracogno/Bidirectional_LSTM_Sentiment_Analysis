@@ -1,0 +1,28 @@
+
+
+
+# Gradient clipping LSTM
+optimizer = tf.train.AdamOptimizer(learning_rate=lr)
+gradients, variables = zip(*optimizer.compute_gradients(loss))
+gradients, _ = tf.clip_by_global_norm(gradients, 5.0)
+optimize = optimizer.apply_gradients(zip(gradients, variables))
+
+
+
+# LOSS = CE + L2 regularization for weights
+ce = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=tensor_Y))
+trainable_vars = tf.trainable_variables()
+l2_reg = tf.reduce_sum([tf.nn.l2_loss(var) for var in trainable_vars])
+loss = ce + reg_alpha * l2_reg
+
+
+
+# MultiCellbiLSTM OR StackedbiLSTM?
+
+
+
+# Stackedbilstm => stack_rnn OR simply take output of one biLSTM and input of next
+
+
+
+# Try GRU
